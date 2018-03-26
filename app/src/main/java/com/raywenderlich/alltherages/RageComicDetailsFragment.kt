@@ -27,22 +27,36 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.raywenderlich.alltherages.databinding.FragmentRageComicDetailsBinding
+import java.io.Serializable
 
 //1
 class RageComicDetailsFragment : Fragment() {
 
-  //2
-  companion object {
+    //2
+    companion object {
 
-    fun newInstance(): RageComicDetailsFragment {
-      return RageComicDetailsFragment()
+        private const val COMIC = "comic"
+
+        fun newInstance(comic: Comic): RageComicDetailsFragment {
+            val args = Bundle()
+            args.putSerializable(COMIC, comic as Serializable)
+            val fragment = RageComicDetailsFragment()
+            fragment.arguments = args
+            return fragment
+        }
     }
-  }
 
-  //3
-  override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                            savedInstanceState: Bundle?): View? {
-    return inflater?.inflate(R.layout.fragment_rage_comic_details, container, false)
-  }
+    //3
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        val fragmentRageComicDetailsBinding = FragmentRageComicDetailsBinding.inflate(inflater!!,
+                container, false)
+
+        val comic = arguments.getSerializable(COMIC) as Comic
+        fragmentRageComicDetailsBinding.comic = comic
+        comic.text = String.format(getString(R.string.description_format), comic.description, comic.url)
+        return fragmentRageComicDetailsBinding.root
+    }
 
 }

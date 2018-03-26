@@ -28,8 +28,12 @@ import android.widget.Toast
 
 class MainActivity : AppCompatActivity(), RageComicListFragment.OnRageComicSelected {
     override fun onRageComicSelected(comic: Comic) {
-        Toast.makeText(this, "Hey, you selected " + comic.name + "!",
-                Toast.LENGTH_SHORT).show()
+        val detailsFragment =
+                RageComicDetailsFragment.newInstance(comic)
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.root_layout, detailsFragment, "rageComicDetails")
+                .addToBackStack(null)
+                .commit()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
