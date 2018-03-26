@@ -26,6 +26,7 @@ import android.databinding.BindingAdapter
 import android.widget.ImageView
 
 //A binding adapter allows us to perform actions on an element which are not supported by default data binding
+//imageResource="@{comic.imageResId}"
 object DataBindingAdapters {
 
   @BindingAdapter("android:src")
